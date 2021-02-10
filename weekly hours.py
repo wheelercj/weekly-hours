@@ -23,7 +23,7 @@ def main():
             window.close()
             return
         elif event == 'cancel':
-            choice = sg.popup_ok_cancel('Are you sure you want to lose unsaved changes?',
+            choice = sg.popup_ok_cancel('Are you sure you want to lose any unsaved changes?',
                                         title='Confirm')
             if choice == 'OK':
                 window.close()
@@ -56,7 +56,6 @@ def create_window(activities):
                                  'hours per week'],
                        show_expanded=True,
                        auto_size_columns=True,
-                       # col_widths=[25, 12, 12, 12],
                        num_rows=25)],
               [sg.Text('Available weekly hours: '),
                sg.Text(available_hours, key='-available-')],
@@ -105,11 +104,12 @@ def create_edit_window(chosen_key, activities):
     else:
         a = activity(None, None, '')
 
-    layout = [[sg.Text('activity name '), sg.Input(key='-name-', default_text=chosen_key)],
-              [sg.Text('hours per day '), sg.Input(key='-hpd-', default_text=a.hpd)],
-              [sg.Text('days per week'), sg.Input(key='-dpw-', default_text=a.dpw)],
-              [sg.Text('parent activity'), sg.Input(key='-parent-', default_text=a.parent)],
-              [sg.Button('ok'), sg.Button('cancel')]]
+    layout = [[sg.Text('activity name '), sg.Input(key='-name-', default_text=chosen_key)]]
+    if not is_parent_activity(chosen_key, activities):
+        layout += [[sg.Text('hours per day '), sg.Input(key='-hpd-', default_text=a.hpd)],
+                   [sg.Text('days per week'), sg.Input(key='-dpw-', default_text=a.dpw)],
+                   [sg.Text('parent activity'), sg.Input(key='-parent-', default_text=a.parent)]]
+    layout += [[sg.Button('ok'), sg.Button('cancel')]]
 
     return sg.Window('edit activity', layout)
 
