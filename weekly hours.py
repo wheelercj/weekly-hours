@@ -107,9 +107,9 @@ def create_edit_window(chosen_key, activities):
     layout = [[sg.Text('activity name '), sg.Input(key='-name-', default_text=chosen_key)]]
     if not is_parent_activity(chosen_key, activities):
         layout += [[sg.Text('hours per day '), sg.Input(key='-hpd-', default_text=a.hpd)],
-                   [sg.Text('days per week'), sg.Input(key='-dpw-', default_text=a.dpw)],
-                   [sg.Text('parent activity'), sg.Input(key='-parent-', default_text=a.parent)]]
-    layout += [[sg.Button('ok'), sg.Button('cancel')]]
+                   [sg.Text('days per week'), sg.Input(key='-dpw-', default_text=a.dpw)]]
+    layout += [[sg.Text('parent activity'), sg.Input(key='-parent-', default_text=a.parent)],
+               [sg.Button('ok'), sg.Button('cancel')]]
 
     return sg.Window('edit activity', layout)
 
